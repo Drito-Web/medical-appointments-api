@@ -1,23 +1,3 @@
-// seed.js
-// const { PrismaClient } = require('@prisma/client');
-// const prisma = new PrismaClient();
-
-// async function main() {
-//   await prisma.user.createMany({
-//     data: [
-//       { name: 'Alice', email: 'alice@example.com' },
-//       { name: 'Bob', email: 'bob@example.com' },
-//     ],
-//   });
-
-//   console.log('Datos insertados');
-// }
-
-// main()
-//   .catch((e) => console.error(e))
-//   .finally(() => prisma.$disconnect());
-
-
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
@@ -36,7 +16,7 @@ async function main() {
 
   console.log('Usuarios de demostración creados con éxito');
 
-  await prisma.user.deleteMany();
+  // await prisma.user.deleteMany();
 }
 
 main()
