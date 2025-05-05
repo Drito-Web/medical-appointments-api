@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "@prisma/client": "^6.7.0",
+    "body-parser": "^1.20.3",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "pg": "^8.15.6"
+  },
+  "name": "curso-expressjs",
+  "version": "1.0.0",
+  "description": "curso express.js",
+  "main": "app.js",
+  "scripts": {
+    "dev": "node --watch app.js",
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "['expressjs']"
+  ],
+  "author": "Oscar Barajas <oscar@platzi.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "prisma": "^6.7.0"
+  }
+}
