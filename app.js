@@ -1,5 +1,5 @@
 require('dotenv').config();
-
+console.log("JWT_SECRET:", process.env.JWT_SECRET);
 const express = require('express');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
@@ -113,9 +113,8 @@ app.put('/users/:id', (req, res) => {
   const updatedUser = req.body;
 
   fs.readFile(usersFilePath, 'utf8', (err, data) => {
-    if (err) {
-      return res.status(500).json({ error: 'Error con conexión de datos.' });
-    }
+    if (err) { return res.status(500).json({ error: 'Error con conexión de datos.' })};
+
     let users = JSON.parse(data);
 
     const validation = validateUser(updatedUser, users);
@@ -169,14 +168,15 @@ app.get('/db-users', async (req, res) => {
   }
 });
 
-app.get("/protected", authenticateToken, (req, res) => {
-  res.send("Esta es una ruta protegida");
-}
-);
+app.get("/protected-route", authenticateToken, (req, res) => {
+  res.send("Esta es una ruta protegida"); 
+});
+
 app.post('/register', async (req, res) => { 
   const { email, password, name } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
-
+  console.log(`Nuevo hash:${hashedPassword} Nuevo User:${ name }`);                         //quitar despues de la prueva 
+  
   const newUser = await prisma.user.create({
     data: {
       email,
@@ -188,6 +188,28 @@ app.post('/register', async (req, res) => {
   res.status(201).json({ message: "User created successfully" });
 
 })
+
+app.post('/login', async (req, res) => {
+
+  const { email, password } = req.body;
+  
+  const user = await prisma.user.findUnique({ where: { email } });
+
+  if (!user) return res.status(400).json({ error: 'Invalid email or password' });
+  
+  const validPassword = await bcrypt.compare(password, user.password);
+ 
+  if (!validPassword) return res.status(400).json({ error: 'Invalid email or password' });
+  
+  const token = jwt.sign(
+    { id: user.id, role: user.role }, 
+    process.env.JWT_SECRET, 
+    { expiresIn: '4h' }
+  );
+   
+  res.json({ token });
+
+});
 
 app.listen(PORT, () => {
   console.log(`Servidor: http://localhost:${PORT}`);
