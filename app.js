@@ -1,15 +1,15 @@
 require('dotenv').config();
-console.log("JWT_SECRET:", process.env.JWT_SECRET);
+
 const express = require('express');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const LoggerMiddleware = require('./middlewares/logger');
-const errorHandler = require('./middlewares/errorHandler');
-const { validateUser } = require('./utils/validation');
-const authenticateToken = require('./middlewares/auth');
+const LoggerMiddleware = require('./src/middlewares/logger');
+const errorHandler = require('./src/middlewares/errorHandler');
+const { validateUser } = require('./src/utils/validation');
+const authenticateToken = require('./src/middlewares/auth');
 
 const bodyParser = require('body-parser');
 
@@ -175,7 +175,6 @@ app.get("/protected-route", authenticateToken, (req, res) => {
 app.post('/register', async (req, res) => { 
   const { email, password, name } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
-  console.log(`Nuevo hash:${hashedPassword} Nuevo User:${ name }`);                         //quitar despues de la prueva 
   
   const newUser = await prisma.user.create({
     data: {
