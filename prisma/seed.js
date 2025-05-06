@@ -2,21 +2,21 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 async function main() {
-  const demoUsers = [
-    { name: 'Juan Pérez', email: 'juan.perez@example.com' },
-    { name: 'María López', email: 'maria.lopez@example.com' },
-    { name: 'Carlos García', email: 'carlos.garcia@example.com' }
-  ];
+  // const demoUsers = [
+  //   { name: 'Juan Pérez', email: 'juan.perez@example.com' },
+  //   { name: 'María López', email: 'maria.lopez@example.com' },
+  //   { name: 'Carlos García', email: 'carlos.garcia@example.com' }
+  // ];
 
-  for (const user of demoUsers) {
-    await prisma.user.create({
-      data: user
-    });
-  }
+  // for (const user of demoUsers) {
+  //   await prisma.user.create({
+  //     data: user
+  //   });
+  // }
 
-  console.log('Usuarios de demostración creados con éxito');
+  // console.log('Usuarios de demostración creados con éxito');
 
-  // await prisma.user.deleteMany();
+  await prisma.user.deleteMany();
 }
 
 main()
