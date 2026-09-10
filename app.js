@@ -83,7 +83,7 @@ app.get('/users', (req, res) => {
     const users = JSON.parse(data);
     res.json(users);
   });
-});
+}); 
 
 app.post('/users', (req, res) => {
   const newUser = req.body;
